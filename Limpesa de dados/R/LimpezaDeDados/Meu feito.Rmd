@@ -1,0 +1,69 @@
+Importação de dados
+
+```{r}
+dados = read.csv("tempo.csv", sep = ";", na.strings="", stringsAsFactors=T)
+```
+Vizualização dos dados
+
+```{r}
+head(dados)
+dados
+summary(dados)
+```
+Tratamento dados$Aparencia
+chuva foi escolhido por ser um das modas
+```{r}
+#vizualizar Aparencia
+summary(dados$Aparencia)
+unique(dados$Aparencia)
+# Substuição do menos para chuva 
+dados[dados$Aparencia == 'menos' , ] $Aparencia = 'chuva'
+#remover levels não utilizados 
+dados$Aparencia = factor(dados$Aparencia)
+#ver resultado 
+summary(dados$Aparencia)
+```
+Tratemento dados$Temperatura 
+```{r}
+#vizualizar dados e o fora de  padroa de -130 a 130
+summary(dados$Temperatura)
+dados[dados$Temperatura < -130 | dados$Temperatura > 130 ,]$Temperatura
+#verificação de dados na
+dados[is.na(dados$Temperatura),]
+#mediana
+median(dados$Temperatura)
+#subistuição dos dados fora de padrao pela mediana
+dados[dados$Temperatura < -130 | dados$Temperatura > 130 ,]$Temperatura = median(dados$Temperatura)
+#vizualização se ainda existem esses dados
+dados[dados$Temperatura < -130 | dados$Temperatura > 130 ,]$Temperatura
+summary(dados$Temperatura)
+
+```
+Tratemento dados$Umidade  
+```{r}
+#vizualizar dados e o fora de  padroa de 0 a 100
+summary(dados$Umidade )
+dados[dados$Umidade  < 0 | dados$Umidade  > 100 ,]$Umidade 
+#verificação de dados na
+dados[is.na(dados$Umidade ),]
+#mediana
+median(dados$Umidade, na.rm = T)
+#subistuição dos dados fora de padrao pela mediana
+dados[dados$Umidade  < 0 | dados$Umidade  > 100 | is.na(dados$Umidade)  ,]$Umidade = median(dados$Umidade, na.rm = T)
+#vizualização se ainda existem esses dados
+dados[dados$Umidade  < 0 | dados$Umidade  > 100 ,]$Umidade 
+summary(dados$Umidade )
+```
+Tratemento dados$Vento 
+
+```{r}
+#vizualizar dados de vento
+summary(dados$Vento )
+#dados NA
+dados[is.na(dados$Vento ),]
+#Subistuição dos dados faltantes pela moda
+dados[is.na(dados$Vento),]$Vento = 'FALSO'
+#vizualizar dados de vento
+summary(dados$Vento)
+```
+
